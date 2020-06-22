@@ -1,6 +1,10 @@
-﻿namespace Auth.Demo.Controllers
+﻿using System.Net.Http;
+
+namespace Auth.Demo.Controllers
 {
     public class Inventory
     {
+        
+            
     }
 }

@@ -1,5 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Auth.Demo.Controllers
@@ -22,6 +27,18 @@ namespace Auth.Demo.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
+            HttpContext.Session.SetString("_name", "Jarvik");
+            HttpContext.Session.GetString("_name");
+            var client = new HttpClient();
+            var WebapiUrl = "";
+            client.BaseAddress = new Uri(WebapiUrl);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType: "application/json"));
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Bearer",
+                Session["TokenNumber"].Tostring() + ":" + "Adimin5");
+
+
+
+                
             return new string[] { "New York", "New Jersey" };
         }
 

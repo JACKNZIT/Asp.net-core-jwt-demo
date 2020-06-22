@@ -15,7 +15,9 @@ namespace Auth.Demo
     {
         public Startup(IConfiguration configuration)
         {
+         
             Configuration = configuration;
+           
         }
 
         public IConfiguration Configuration { get; }
@@ -23,6 +25,9 @@ namespace Auth.Demo
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(1);//You can set Time   
+            });
             services.AddControllers();
             var tokenKey = Configuration.GetValue<string>("TokenKey");
             var key = Encoding.ASCII.GetBytes(tokenKey);
@@ -63,6 +68,7 @@ namespace Auth.Demo
             }
 
             app.UseRouting();
+            app.UseSession();
 
             app.UseAuthentication();
             app.UseAuthorization();
